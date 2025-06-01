@@ -21,6 +21,7 @@ import {TaskApiService} from "../../../../shared/services/task/task-api.service"
 import {Task} from "../../../../shared/model/task/task.entity";
 import {MatDialog} from "@angular/material/dialog";
 import {TaskViewCardComponent} from "../../../../display/task/task-view-card/task-view-card.component";
+import {AuthenticationService} from "../../../../iam/services/authentication.service";
 
 const colors: Record<string, EventColor> = {
   "red": {
@@ -70,11 +71,19 @@ export class ScheduleViewComponent implements AfterViewInit {
   constructor(private cdr: ChangeDetectorRef,
               private employeeService: EmployeeApiService,
               private scheduleService: TaskApiService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private authenticationService: AuthenticationService
   ) {
+
+    const currentRole = this.authenticationService['signedInRole'].value;
+    console.log('Current role:', currentRole);
+
     employeeService.getCurrentUser().subscribe((employee) => {
       this.fetchEvents();
     });
+
+
+
   }
 
   calendarEventsFromTasks(tasks: Task[]): CalendarEvent[] {
@@ -95,10 +104,22 @@ export class ScheduleViewComponent implements AfterViewInit {
   }
 
   fetchEvents() {
-    this.scheduleService.getMyTasks().subscribe((events) => {
-      this.events = this.calendarEventsFromTasks(events);
-      this.refresh.next();
-    });
+
+    if(this.authenticationService['signedInRole'].value ==1) {
+
+      this.scheduleService.getAll().subscribe((events) => {
+        this.events = this.calendarEventsFromTasks(events);
+        console.log('Fetched events:', this.events);
+        this.refresh.next();
+      });
+
+    }
+    else{
+      this.scheduleService.getMyTasks().subscribe((events) => {
+        this.events = this.calendarEventsFromTasks(events);
+        this.refresh.next();
+      });
+    }
   }
 
   events: CalendarEvent[] = []

@@ -27,6 +27,7 @@ export class TaskApiService extends BaseService<Task> {
     if (this.employeeEmail == undefined) {
       return new Observable<Task[]>();
     }
+
     return this.getAllTaskForEmployee(this.employeeEmail);
   }
 

@@ -65,7 +65,14 @@ export class EmployeesContainerComponent implements OnInit {
     // Logic for deleting employee
   }
 
-  searchFilter(event: any) {
+  searchFilter(event: string) {
     console.log('Search event received from child:', event);
+    if (event && event.trim() !== '') {
+      this.EmployeesArray = this.ResetEmployees.filter(employee =>
+        employee.names.toLowerCase().includes(event.toLowerCase())
+      );
+    } else {
+      this.EmployeesArray = [...this.ResetEmployees]; // Reset if search is empty
+    }
   }
 }

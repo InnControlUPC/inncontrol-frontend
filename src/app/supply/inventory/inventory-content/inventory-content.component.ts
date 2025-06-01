@@ -54,6 +54,13 @@ searchFilter(event: any){
     console.log('Item not found');
     this.inventoryData = this.originalState;
   }
+  if (event && event.trim() !== '') {
+    this.inventoryData = this.originalState.filter(inventory =>
+      inventory.productTitle.toLowerCase().includes(event.toLowerCase())
+    );
+  } else {
+    this.inventoryData = [...this.originalState]; // Reset if search is empty
+  }
 
 }
 receiveFilter(event: any){
