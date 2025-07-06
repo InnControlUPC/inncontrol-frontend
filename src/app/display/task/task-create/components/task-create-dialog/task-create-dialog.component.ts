@@ -78,20 +78,28 @@ export class TaskCreateDialogComponent {
     let mins = part[1];
     let niceEmployeeMail = this.getEmailFromString(this.TaskItemFormGroup.value.employee);
 
+
     const formValues = this.TaskItemFormGroup.value;
+    const managerEmail = this.employeeApiService.getCurrentUsername();
 
     if (this.TaskItemFormGroup.valid) {
       date = this.TaskItemFormGroup.value.dueDate;
       date.setHours(hrs, mins, 0);
       console.log(`Employee: ${niceEmployeeMail}`);
+      console.log(`Employee: ${managerEmail}`);
       console.log(`Due Date: ${date}`);
       console.log(`Task Name: ${formValues.taskName}`);
+
+
 
       this.taskApiService.createTask({
         title: formValues.taskName,
         employeeEmail: niceEmployeeMail,
+        managerEmail: managerEmail,
         description: formValues.description,
         dueDate: date.toISOString(),
+
+
       }).subscribe(() => {
         this.snackBar.open('Task created', 'Close', {
           duration: 3000,

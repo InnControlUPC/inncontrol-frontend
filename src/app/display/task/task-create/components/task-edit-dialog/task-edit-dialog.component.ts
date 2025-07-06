@@ -2,6 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Task} from "../../../../../shared/model/task/task.entity";
+import {EmployeeApiService} from "../../../../../shared/services/employee-api.service";
 @Component({
   selector: 'app-task-edit-dialog',
   templateUrl: './task-edit-dialog.component.html',
@@ -11,6 +12,7 @@ export class TaskEditDialogComponent {
   TaskItemFormGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
+              private employeeApiService: EmployeeApiService,
               public dialogRef: MatDialogRef<TaskEditDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Task) {
 

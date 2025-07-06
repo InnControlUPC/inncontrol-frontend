@@ -5,6 +5,7 @@ import {TaskEditDialogComponent} from "../task-create/components/task-edit-dialo
 import {Task} from "../../../shared/model/task/task.entity";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {EmployeeApiService} from "../../../shared/services/employee-api.service";
+import {AuthenticationService} from "../../../iam/services/authentication.service";
 
 @Component({
   selector: 'app-task-content',
@@ -21,13 +22,16 @@ export class TaskContentComponent implements OnInit, AfterViewInit {
   isManager: boolean = false;
 
 
+
   constructor(private taskService: TaskApiService, private dialog: MatDialog,
               private snackBar: MatSnackBar,
-              private userApiService: EmployeeApiService
+              private userApiService: EmployeeApiService,
+              private authenticationService: AuthenticationService
   ) {
     userApiService.getCurrentUser().subscribe((user) => {
       this.getAllTasks();
-      this.isManager = user.rolUser == 1;
+      console.log('user', user);
+      this.isManager = (this.authenticationService['signedInRole'].value ==1)
     });
   }
 
