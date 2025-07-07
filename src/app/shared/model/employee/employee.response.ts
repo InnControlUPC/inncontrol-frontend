@@ -10,7 +10,7 @@ export class EmployeeResponse {
     public salary: number,
     public initiationContract: string,
     public terminationContract: string,
-    public profileId: number
+    public id: number
   ) {
   }
 }

@@ -107,10 +107,10 @@ export class EmployeeApiService {
 
   fetchUser(email: string): Promise<User> {
     return new Promise<User>((resolve, reject) => {
-      this.httpClient.get<EmployeeResponse>(`${this.basePath}/employees?email=${email}`)
+      this.httpClient.get<EmployeeResponse>(`${this.basePath}/profiles/by-email?email=${email}`)
         .subscribe({
           next: (response) => {
-            this.fetchFetchProfile(response.profileId).then((profile) => {
+            this.fetchFetchProfile(response.id).then((profile) => {
               let user = new User();
               user.id = profile.userId;
               user.email = profile.email;
