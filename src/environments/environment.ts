@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  serverBasePath: 'http://localhost:8080/api/v1',
-  prodBasePath: 'http://localhost:8080/api/v1'
+  serverBasePath: 'https://inncontrol-aws-api.llantatech.org.pe/api/v1',
+  prodBasePath: 'https://inncontrol-aws-api.llantatech.org.pe/api/v1'
 };
